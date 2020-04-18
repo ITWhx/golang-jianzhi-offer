@@ -1,4 +1,8 @@
-### 	深度优先遍历（DFS）题型
+[TOC]
+
+
+
+
 
 **前言**
 
@@ -116,3 +120,84 @@ func exist(board [][]byte, word string) bool {
 
 ```
 
+
+
+### 机器人运动范围
+
+[LeetCode 面试题13]( https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/ )
+
+**题目描述**
+
+> 地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。一个机器人从坐标 [0, 0] 的格子开始移动，它每次可以向左、右、上、下移动一格（不能移动到方格外），也不能进入行坐标和列坐标的数位之和大于k的格子。例如，当k为18时，机器人能够进入方格 [35, 37] ，因为3+5+3+7=18。但它不能进入方格 [35, 38]，因为3+5+3+8=19。请问该机器人能够到达多少个格子？
+>
+
+**示例**
+
+> ```
+> 输入：m = 2, n = 3, k = 1
+> 输出：3
+> ```
+
+**核心思想**
+
+* 计算机器人所有能走到的格子之和！！
+
+**解题思路**
+
+* 从左上角开始移动，当进入一个格子，通过格子的下标判断是否满足进入条件
+* 满足则使用一个二维数组标记走过的格子，并且更新走过格子数。接着向周围其他格子移动
+
+**代码实现**
+
+```go
+func movingCount(m int, n int, k int) int {
+	var count int
+	used := make([][]bool, m)
+	//go创建二维数组有点麻烦
+	for i := 0; i < m; i++ {
+		used[i] = make([]bool,n)
+	}
+
+	var dfs func(r, c int)
+	dfs = func(r, c int) {
+		//判断当前格子是否满足进入条件
+		if r >= m || r < 0 || c >= n || c < 0 || used[r][c] || cal(r, c) > k {
+			return
+		}
+
+		//标记走过的格子
+		used[r][c] = true
+		count++
+
+		//递归向四周移动
+		dfs(r+1, c)
+		dfs(r-1, c)
+		dfs(r, c+1)
+		dfs(r, c-1)
+	}
+
+	dfs(0, 0)
+
+	return count
+}
+
+func cal(i, j int) int {
+	var res int
+	if i > 0 {
+		res += i % 10
+		res += i / 10
+	}
+
+	if j > 0 {
+		res += j % 10
+		res += j / 10
+	}
+	return res
+}
+
+```
+
+**复杂度分析**
+
+* **时间复杂度：**O(MN)
+* **空间复杂度：**O(MN)
