@@ -1,8 +1,4 @@
-[TOC]
-
-
-
-
+### 	深度优先遍历（DFS）题型
 
 **前言**
 
@@ -120,8 +116,6 @@ func exist(board [][]byte, word string) bool {
 
 ```
 
-
-
 ### 机器人运动范围
 
 [LeetCode 面试题13]( https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/ )
@@ -133,10 +127,10 @@ func exist(board [][]byte, word string) bool {
 
 **示例**
 
-> ```
+>
 > 输入：m = 2, n = 3, k = 1
 > 输出：3
-> ```
+
 
 **核心思想**
 
@@ -199,5 +193,5 @@ func cal(i, j int) int {
 
 **复杂度分析**
 
-* **时间复杂度：**O(MN)
-* **空间复杂度：**O(MN)
+* **时间复杂度**：O(MN)
+* **空间复杂度**：O(MN)
