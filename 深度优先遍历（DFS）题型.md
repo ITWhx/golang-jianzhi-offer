@@ -195,3 +195,69 @@ func cal(i, j int) int {
 
 * **时间复杂度**：O(MN)
 * **空间复杂度**：O(MN)
+
+
+
+### 面试题38. 字符串的排列
+
+[leetcode](  https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/  )
+
+**题目描述**
+
+> 输入一个字符串，打印出该字符串中字符的所有排列。
+
+**示例**
+
+> 输入：s = "abc"
+> 输出：["abc","acb","bac","bca","cab","cba"]
+
+**解题思路**
+
+* 使用一个数组记录使用过的字符下标
+* 每次递归使用一个map记录当前添加字符的下标使用过的字符。
+
+**实现代码**
+
+```go
+func permutation(s string) []string {
+	n := len(s)
+	var res [] string
+	//存储排列
+	solution := make([]byte, n)
+	//记录已经使用过的字符下标
+	used := make([]bool, n)
+
+	var helper func(idx int)
+	//idx：当前加入排列元素的下标
+	helper = func(idx int) {
+		//表示一个排列完成，加入结果集
+		if idx == n {
+			tmp := make([]byte, n)
+			copy(tmp, solution)
+			res = append(res, string(tmp))
+			return
+		}
+        //记录当前排列下标使用过的字符
+		flag := make(map[byte]bool)
+		for i := 0; i < n; i++ {
+			if used[i] || flag[s[i]] {
+				continue
+			}
+			flag[s[i]], used[i] = true, true
+			solution[idx] = s[i]
+			helper(idx + 1)
+			used[i] = false
+		}
+	}
+
+	helper(0)
+	return res
+}
+
+```
+
+**复杂度分析**
+
+* **空间复杂度 O(N^2)**
+*  **空间复杂度 O(N^2)**
+
